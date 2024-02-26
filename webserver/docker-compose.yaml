@@ -8,4 +8,15 @@ services:
     volumes:
       - ./nginx/config/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/logs:/var/log/nginx/
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     network_mode: host
+
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email laoderahilatansa@gmail.com -d demo-devops.pacmann.ai --agree-tos
